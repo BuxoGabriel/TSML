@@ -14,7 +14,7 @@ export abstract class Ilayer {
 
     train(input: Tensor, expected: Tensor): void {
         let result: Tensor = this.feedforward(input)
-        let error = Tensor.subtract(result, expected)
+        let error = result.subtract(expected)
         this.backpropagate(error)
     }
 }

@@ -9,6 +9,8 @@
   "author": "Gabriel Buxo",
   "license": "ISC",
   "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.1",
     "typescript": "^5.2.2"
   },
   "dependencies": {
