@@ -1,6 +1,6 @@
 import Tensor from "./tensor"
 
-export class Matrix extends Tensor {
+export default class Matrix extends Tensor {
     public rows: number
     public cols: number
 
@@ -20,7 +20,7 @@ export class Matrix extends Tensor {
     }
 
     static Multiply(a: Matrix, b: Matrix): Matrix {
-        if(a.cols != b.rows) throw "columns of first matrix must match rows of second matrix"
+        if(a.cols != b.rows) throw new Error("columns of first matrix must match rows of second matrix")
 
         let matrix = new Matrix(a.rows, b.cols)
 
@@ -43,7 +43,7 @@ export class Matrix extends Tensor {
             matrix = new Matrix(t.dimensions[0], 1)
         } else if(t.cardinality = 2) {
             matrix = new Matrix(t.dimensions[0], t.dimensions[2])
-        } else throw "cardinality of tensor must be 1 or 2"
+        } else throw new Error("cardinality of tensor must be 1 or 2")
 
         matrix.data = t.data
         return matrix

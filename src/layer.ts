@@ -33,7 +33,7 @@ export class CompositeLayer extends Ilayer {
         if(!this.layers.length) {
             this.inputDim = layer.inputDim
         } else if(this.outputDim != layer.inputDim) {
-            throw "Input dimensions of added layer must match output dimensions of existing composite layer"
+            throw new Error("Input dimensions of added layer must match output dimensions of existing composite layer")
         }
 
         this.outputDim = layer.outputDim
@@ -51,7 +51,7 @@ export class CompositeLayer extends Ilayer {
 
     backpropagate(error: Tensor): Tensor {
         for(let i = this.layers.length - 1; i >= 0; i--) {
-            if(error.cardinality != this.layers[i].outputDim) throw `Cardinality of error does not match outputDim for layer ${i}`
+            if(error.cardinality != this.layers[i].outputDim) throw new Error(`Cardinality of error does not match outputDim for layer ${i}`)
             error = this.layers[i].backpropagate(error)
         }
         return error

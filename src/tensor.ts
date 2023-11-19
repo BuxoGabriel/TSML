@@ -3,16 +3,18 @@ export default class Tensor {
     public cardinality: number
     public size: number
     public data: number[]
-    constructor(dimensions: number[]) {
+    constructor(dimensions: number[], data?: number[]) {
+        if(dimensions.length == 0) throw new Error("tensor can not be 0 dimensional")
         this.dimensions = dimensions
         this.cardinality = dimensions.length
         this.size = 1
 
         for(let dim of dimensions) {
+            if(dim == 0) throw new Error("tensor can not have dimension with size 0")
             this.size *= dim
         }
-
-        this.data = new Array(this.size).fill(0)
+        if(data) this.data = data
+        else this.data = new Array(this.size).fill(0)
     }
 
     matchesSignature(other: Tensor): boolean {
@@ -24,7 +26,7 @@ export default class Tensor {
     }
 
     operation(other: Tensor, fn: (a: number, b: number) => number, inPlace = false) {
-        if(!this.matchesSignature(other)) throw "dimensions of tensors must match for subtraction"
+        if(!this.matchesSignature(other)) throw new Error("dimensions of tensors must match for subtraction")
 
         let tensor: Tensor
         if(inPlace) tensor = this
@@ -47,5 +49,11 @@ export default class Tensor {
     
     piecewiseWultiply(other: Tensor, inPlace: boolean = false): Tensor {
         return this.operation(other, (a, b) => a * b, inPlace)
+    }
+
+    static clone(t: Tensor) {
+        let tensor = new Tensor(t.dimensions)
+        tensor.operation(t, (a, b) => b, true)
+        return tensor
     }
 }
