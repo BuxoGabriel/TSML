@@ -15,7 +15,9 @@ describe('tensor module', () => {
         expect(tensor.cardinality).toBe(3)
 
         expect(() => new Tensor([])).toThrowError("tensor can not be 0 dimensional")
-        expect(() => new Tensor([3, 2, 0])).toThrowError("tensor can not have dimension with size 0")
+        expect(() => new Tensor([3, 2, 0])).toThrowError("tensor can not have dimension with size less than 1")
+        expect(() => new Tensor([-2, 2, 2])).toThrowError("tensor can not have dimension with size less than 1")
+        expect(() => new Tensor([2, 2], [])).toThrowError("length of data must exactly match size of tensor")
 
         tensor = new Tensor([2, 2, 2], [1, 2, 3, 4, 5, 6, 7, 8])
 

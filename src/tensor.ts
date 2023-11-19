@@ -10,10 +10,13 @@ export default class Tensor {
         this.size = 1
 
         for(let dim of dimensions) {
-            if(dim == 0) throw new Error("tensor can not have dimension with size 0")
+            if(dim < 1) throw new Error("tensor can not have dimension with size less than 1")
             this.size *= dim
         }
-        if(data) this.data = data
+        if(data){
+            if(data.length != this.size) throw new Error("length of data must exactly match size of tensor")
+            this.data = data
+        }
         else this.data = new Array(this.size).fill(0)
     }
 
