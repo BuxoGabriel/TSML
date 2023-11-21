@@ -6,7 +6,7 @@ export default class Matrix extends Tensor {
 
     constructor(rows: number, cols: number, data?: number[]) {
         if(data && data.length != rows * cols) throw new Error("length of data must exactly match size of matrix")
-        super([rows, cols], data)
+        else super([rows, cols], data)
         this.rows = rows
         this.cols = cols
     }
@@ -42,6 +42,14 @@ export default class Matrix extends Tensor {
         }
         [this.rows, this.cols] = [this.cols, this.rows]
         return this
+    }
+
+    randomize(low: number = 0, high: number = 1, inPlace: boolean = false, floor: boolean = false): Matrix {
+        let tensor: Tensor = super.randomize(low, high, inPlace, floor)
+        let matrix: Matrix
+        if(!inPlace) matrix = Matrix.fromTensor(tensor)
+        else matrix = tensor as Matrix
+        return matrix
     }
 
     static createTranspose(a: Matrix): Matrix {

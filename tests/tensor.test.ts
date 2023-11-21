@@ -80,11 +80,11 @@ describe('tensor module', () => {
             let t1 = new Tensor([2, 2], [1, 2, 3, 4])
             let t2 = new Tensor([2, 2], [2, 2, 2, 2])
     
-            let t3 = t1.piecewiseWultiply(t2)
+            let t3 = t1.piecewiseMultiply(t2)
             expect(t3).not.toBe(t1)
             expect(t3.data).toEqual([2, 4, 6, 8])
     
-            t3 = t1.piecewiseWultiply(t2, true)
+            t3 = t1.piecewiseMultiply(t2, true)
             expect(t3).toBe(t1)
             expect(t1.data).toEqual([2, 4, 6, 8])
         })

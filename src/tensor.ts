@@ -50,8 +50,29 @@ export default class Tensor {
         return this.operation(other, (a, b) => a - b, inPlace)
     }
     
-    piecewiseWultiply(other: Tensor, inPlace: boolean = false): Tensor {
+    piecewiseMultiply(other: Tensor, inPlace: boolean = false): Tensor {
         return this.operation(other, (a, b) => a * b, inPlace)
+    }
+
+    map(fn: (x: number) => number, inPlace: boolean = false) {
+        let tensor: Tensor
+        if(inPlace) tensor = this
+        else tensor = new Tensor(this.dimensions)
+        for(let i = 0; i < this.size; i++) {
+            tensor.data[i] = fn(this.data[i])
+        }
+        return tensor
+    }
+
+    randomize(low: number = 0, high: number = 1, inPlace: boolean = false, floor: boolean = false) {
+        return this.map(_ => {
+            let x = Math.random() * (high - low) - low;
+            return floor? Math.floor(x): x
+        }, inPlace)
+    }
+
+    zero() {
+        return this.map(_ => 0, true)
     }
 
     static clone(t: Tensor) {

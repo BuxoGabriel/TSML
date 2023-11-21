@@ -1,10 +1,10 @@
-import Dense from "./Dense";
-import { CompositeLayer, Ilayer } from "./layer";
+import Dense from "./dense";
+import { CompositeLayer, Alayer } from "./layer";
 import Tensor from "./tensor";
 import Matrix from "./matrix";
 
 export default { 
-    Ilayer,
+    Alayer,
     CompositeLayer,
     Dense,
     Tensor,
