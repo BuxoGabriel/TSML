@@ -2,7 +2,7 @@
   "name": "tsml",
   "version": "1.0.0",
   "description": "A machine learning library in typescript",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
     "test": "npx jest",
     "test-coverage": "npx jest --coverage"
