@@ -26,8 +26,8 @@ export default class Dense extends Alayer {
         this.biasDeltas = []
 
         for (let i = 1; i < structure.length; i++) {
-            this.weights.push(new Matrix(structure[i], structure[i - 1]).randomize(0, 1, true))
-            this.biases.push(new Matrix(structure[i], 1).randomize(0, 1, true))
+            this.weights.push(new Matrix(structure[i], structure[i - 1]).randomize(-1, 1, true))
+            this.biases.push(new Matrix(structure[i], 1).randomize(-1, 1, true))
             this.weightDeltas.push(new Matrix(structure[i], structure[i - 1]))
             this.biasDeltas.push(new Matrix(structure[i], 1))
         }
@@ -62,7 +62,7 @@ export default class Dense extends Alayer {
             this.biasDeltas[i].add(mError.map(x => x * this.learningRate), true)
             if(i == 0 && !full) break
             mError = Matrix.Multiply(Matrix.createTranspose(this.weights[i]), mError) as Matrix
-            mError.map(x =>  x / this.layers[i + 1].rows)
+            mError.map(x => x / this.layers[i + 1].rows)
         }
         return mError
     }

@@ -66,7 +66,7 @@ export default class Tensor {
 
     randomize(low: number = 0, high: number = 1, inPlace: boolean = false, floor: boolean = false) {
         return this.map(_ => {
-            let x = Math.random() * (high - low) - low;
+            let x = Math.random() * (high - low) + low;
             return floor? Math.floor(x): x
         }, inPlace)
     }

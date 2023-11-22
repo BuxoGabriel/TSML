@@ -17,6 +17,7 @@ export abstract class Alayer {
     train(input: Tensor, expected: Tensor): void {
         let result: Tensor = this.feedforward(input)
         let error = expected.subtract(result)
+        
         this.backpropagate(error, false)
         this.applyDeltas()
     }
