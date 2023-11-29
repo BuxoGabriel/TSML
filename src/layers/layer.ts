@@ -1,9 +1,10 @@
-import Tensor from "./tensor";
+import Tensor from "../math/tensor";
 
 export abstract class Alayer {
     public lr: number = 0.01
     public inputDim: number
     public outputDim: number
+    public cost: number = 0
 
     constructor(inputDim: number, outputDim: number) {
         this.inputDim = inputDim
@@ -17,7 +18,8 @@ export abstract class Alayer {
     train(input: Tensor, expected: Tensor): void {
         let result: Tensor = this.feedforward(input)
         let error = expected.subtract(result)
-        
+        this.cost = error.map(x => x * x / 2 / error.size * 100, false).sum()
+
         this.backpropagate(error, false)
         this.applyDeltas()
     }
@@ -64,7 +66,7 @@ export class CompositeLayer extends Alayer {
     backpropagate(error: Tensor, full: boolean = true): Tensor {
         for (let i = this.layers.length - 1; i >= 0; i--) {
             if (error.cardinality != this.layers[i].outputDim) throw new Error(`Cardinality of error does not match outputDim for layer ${i}`)
-            error = (full || i != 0)? this.layers[i].backpropagate(error, true): this.layers[i].backpropagate(error, false)
+            error = (full || i != 0) ? this.layers[i].backpropagate(error, true) : this.layers[i].backpropagate(error, false)
         }
         return error
     }

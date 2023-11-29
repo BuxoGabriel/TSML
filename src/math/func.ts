@@ -9,8 +9,8 @@ export const sigmoid: activationFunction = {
 }
 
 export const relu: activationFunction = {
-    fn: (x) => Math.max(0, x),
-    dfn: (x) => x > 0? 1 : 0
+    fn: (x) => x > 0? x : (0.01 * x),
+    dfn: (x) => x > 0? 1 : 0.01
 }
 
 export type lossFunction = {

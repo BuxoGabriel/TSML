@@ -1,7 +1,7 @@
-import { activationFunction, lossFunction, sigmoid, squareErr } from "./func";
+import { activationFunction, lossFunction, sigmoid, squareErr } from "../math/func";
 import { Alayer } from "./layer";
-import Matrix from "./matrix";
-import Tensor from "./tensor";
+import Matrix from "../math/matrix";
+import Tensor from "../math/tensor";
 
 export default class Dense extends Alayer {
     private aFn: activationFunction
@@ -37,11 +37,12 @@ export default class Dense extends Alayer {
         if (!this.accepts(input)) throw Error("Dense layer only supports 2 dimensional tensors as inputs")
         // set input layer
         this.layers[0].data = input.data
-        if(!(this.layers[0].cols == 1)) throw Error("input must be 1d/column Matrix")
+        if (!(this.layers[0].cols == 1)) throw Error("input must be 1d/column Matrix")
 
         for (let i = 0; i < this.weights.length; i++) {
             // H(n + 1) = Afn(W(n)H(n) + B(n))
             this.layers[i + 1] = Matrix.Multiply(this.weights[i], this.layers[i])
+            this.layers[i + 1].map(x => x / this.layers[i].rows)
             this.layers[i + 1].add(this.biases[i], true)
             this.layers[i + 1].map(this.aFn.fn, true)
         }
@@ -53,14 +54,14 @@ export default class Dense extends Alayer {
         if (!this.acceptsError(error)) throw Error("Dense layer only supports 1 dimensional tensors as error")
         if (!(error instanceof Matrix)) error = Matrix.fromTensor(error)
         let mError = error as Matrix
-        if(!(mError.cols == 1)) throw Error("error must be 1d/column Matrix")
+        if (!(mError.cols == 1)) throw Error("error must be 1d/column Matrix")
 
         for (let i = this.weights.length - 1; i >= 0; i--) {
             mError.piecewiseMultiply(this.layers[i + 1].map(this.aFn.dfn, false), true)
             let dW = Matrix.Multiply(mError, Matrix.createTranspose(this.layers[i]))
             this.weightDeltas[i].add(dW.map(x => x * this.learningRate), true)
             this.biasDeltas[i].add(mError.map(x => x * this.learningRate), true)
-            if(i == 0 && !full) break
+            if (i == 0 && !full) break
             mError = Matrix.Multiply(Matrix.createTranspose(this.weights[i]), mError) as Matrix
             mError.map(x => x / this.layers[i + 1].rows)
         }

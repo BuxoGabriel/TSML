@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@jest/globals"
-import Matrix from "../src/matrix"
-import Tensor from "../src/tensor"
+import Matrix from "../src/math/matrix"
+import Tensor from "../src/math/tensor"
 
 describe("matrix module", () => {
     test("Matrix initialization", () => {
@@ -19,8 +19,8 @@ describe("matrix module", () => {
         expect(a.data).toEqual([0, 0, 0, 0, 0, 0])
         const data = [1, 2, 3, 4, 5, 6]
         let index = 0
-        for(let row = 0; row < a.rows; row++) {
-            for(let col = 0; col < a.cols; col++) {
+        for (let row = 0; row < a.rows; row++) {
+            for (let col = 0; col < a.cols; col++) {
                 a.setData(row, col, data[index])
                 expect(a.getData(row, col)).toBe(data[index])
                 index++
@@ -69,7 +69,7 @@ describe("matrix module", () => {
         expect(c.data).toEqual([8, 5, 20, 13])
         expect(c.rows).toBe(2)
         expect(c.cols).toBe(2)
-        
+
         b = new Matrix(2, 3, [1, 2, 3, 4, 5, 6])
         c = Matrix.Multiply(a, b)
         expect(c.data).toEqual([9, 12, 15, 19, 26, 33])
@@ -82,13 +82,13 @@ describe("matrix module", () => {
         expect(matrix.rows).toBe(3)
         expect(matrix.cols).toBe(3)
         expect(matrix.data).toEqual([0, 0, 0, 0, 0, 0, 0, 0, 0])
-        
+
         tensor = new Tensor([2])
         matrix = Matrix.fromTensor(tensor)
         expect(matrix.rows).toBe(2)
         expect(matrix.cols).toBe(1)
         expect(matrix.data).toEqual([0, 0])
-        
+
         tensor = new Tensor([3, 3, 3])
         expect(() => Matrix.fromTensor(tensor)).toThrowError("cardinality of tensor must be 1 or 2")
     })

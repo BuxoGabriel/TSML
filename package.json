@@ -4,7 +4,7 @@
   "description": "A machine learning library in typescript",
   "main": "build/index.js",
   "scripts": {
-    "test": "npx jest",
+    "test": "npx jest --verbose",
     "test-coverage": "npx jest --coverage"
   },
   "author": "Gabriel Buxo",

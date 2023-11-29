@@ -54,7 +54,7 @@ export default class Tensor {
         return this.operation(other, (a, b) => a * b, inPlace)
     }
 
-    map(fn: (x: number) => number, inPlace: boolean = false) {
+    map(fn: (x: number) => number, inPlace: boolean = false): Tensor {
         let tensor: Tensor
         if(inPlace) tensor = this
         else tensor = new Tensor(this.dimensions)
@@ -64,17 +64,25 @@ export default class Tensor {
         return tensor
     }
 
-    randomize(low: number = 0, high: number = 1, inPlace: boolean = false, floor: boolean = false) {
+    randomize(low: number = 0, high: number = 1, inPlace: boolean = false, floor: boolean = false): Tensor {
         return this.map(_ => {
             let x = Math.random() * (high - low) + low;
             return floor? Math.floor(x): x
         }, inPlace)
     }
 
-    zero() {
+    zero(): Tensor {
         return this.map(_ => 0, true)
     }
 
+    sum(): number {
+        let total = 0
+        for(let i = 0; i < this.size; i++) {
+            total += this.data[i]
+        }
+        return total
+    }
+ 
     static clone(t: Tensor) {
         let tensor = new Tensor(t.dimensions)
         tensor.operation(t, (a, b) => b, true)

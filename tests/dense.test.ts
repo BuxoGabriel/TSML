@@ -1,6 +1,6 @@
-import Dense from "../src/dense"
-import { activationFunction, relu } from "../src/func"
-import Matrix from "../src/matrix"
+import Dense from "../src/layers/dense"
+import { activationFunction, relu } from "../src/math/func"
+import Matrix from "../src/math/matrix"
 
 describe("dense layer math tests", () => {
     test("feedforward", () => {
@@ -11,7 +11,7 @@ describe("dense layer math tests", () => {
         }
 
         let NN = new Dense([2, 1], learningRate, activationFunction)
-        NN.setParameters({weights: [new Matrix(1, 2, [3, 1])], biases: [new Matrix(1, 1, [0.5])]})
+        NN.setParameters({ weights: [new Matrix(1, 2, [3, 1])], biases: [new Matrix(1, 1, [0.5])] })
         const input = new Matrix(2, 1, [0.5, 1.5])
         const output = NN.feedforward(input)
         const layers = NN.getLayers()
