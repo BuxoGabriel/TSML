@@ -15,13 +15,26 @@ export abstract class Alayer {
     abstract backpropagate(error: Tensor, full: boolean): Tensor
     abstract applyDeltas(): void
 
-    train(input: Tensor, expected: Tensor): void {
+    train(input: Tensor, expected: Tensor, applyDeltas: boolean = true): number {
         let result: Tensor = this.feedforward(input)
         let error = expected.subtract(result)
         this.cost = error.map(x => x * x / 2 / error.size * 100, false).sum()
 
         this.backpropagate(error, false)
+        if(applyDeltas) this.applyDeltas()
+        return this.cost
+    }
+
+    batchTrain(input: Tensor[], expected: Tensor[]): number {
+        let len = input.length
+        let cost = 0
+        if(expected.length !== len) throw Error("Input and expected arrays must be same sized for batch training")
+        for(let i = 0; i < len; i++) {
+            cost += this.train(input[i], expected[i], false) / len
+        }
         this.applyDeltas()
+        this.cost = cost
+        return cost
     }
 
     accepts(input: Tensor): boolean {
