@@ -58,7 +58,10 @@ export class RecieverLayer extends ALayer {
     private lastResult: Tensor | undefined;
     
     constructor(wrappedModel: ALayer, emitter: EmitterLayer) {
-        super(wrappedModel.inputDim, wrappedModel.outputDim)
+        if(wrappedModel.inputDim !== emitter.outputDim) {
+            throw Error("Emitter must output tensor with same cardinality as wrappedModel input")
+        }
+        super(emitter.inputDim, wrappedModel.outputDim)
         this.wrappedModel = wrappedModel
         this.emitter = emitter
         emitter.subscribe(this)
