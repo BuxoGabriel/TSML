@@ -48,7 +48,7 @@ export abstract class ALayer {
     }
 }
 
-export class CompositeLayer extends Alayer {
+export class CompositeLayer extends ALayer {
     private layers: Alayer[]
 
     constructor() {
