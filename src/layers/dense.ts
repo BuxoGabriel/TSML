@@ -1,9 +1,9 @@
 import { activationFunction, lossFunction, sigmoid, squareErr } from "../math/func";
-import { Alayer } from "./layer";
+import { ALayer } from "./layer";
 import Matrix from "../math/matrix";
 import Tensor from "../math/tensor";
 
-export default class Dense extends Alayer {
+export default class Dense extends ALayer {
     private aFn: activationFunction
     private learningRate: number
     private structure: number[]

@@ -1,9 +1,9 @@
-import { Alayer } from "./layer";
+import { ALayer } from "./layer";
 import Kernal from "../math/kernal";
 import Tensor from "../math/tensor";
 import { activationFunction, sigmoid } from "../math/func";
 
-export default class Conv2d extends Alayer {
+export default class Conv2d extends ALayer {
     input?: Tensor
     kernals: Kernal[] = []
     learningRate: number

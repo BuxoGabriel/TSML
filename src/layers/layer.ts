@@ -1,6 +1,6 @@
 import Tensor from "../math/tensor";
 
-export abstract class Alayer {
+export abstract class ALayer {
     public lr: number = 0.01
     public inputDim: number
     public outputDim: number

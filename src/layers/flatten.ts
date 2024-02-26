@@ -1,8 +1,8 @@
-import { Alayer } from "./layer";
+import { ALayer } from "./layer";
 import Matrix from "../math/matrix";
 import Tensor from "../math/tensor";
 
-export default class Flatten extends Alayer {
+export default class Flatten extends ALayer {
     private inputSignature: number[]
     constructor(inputSignature: number[]) {
         super(3, 2)
