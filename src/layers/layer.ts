@@ -49,14 +49,14 @@ export abstract class ALayer {
 }
 
 export class CompositeLayer extends ALayer {
-    private layers: Alayer[]
+    private layers: ALayer[]
 
     constructor() {
         super(0, 0)
         this.layers = []
     }
 
-    addLayer(layer: Alayer): CompositeLayer {
+    addLayer(layer: ALayer): CompositeLayer {
         if (!this.layers.length) {
             this.inputDim = layer.inputDim
         } else if (this.outputDim != layer.inputDim) {
